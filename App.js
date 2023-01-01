@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -6,7 +6,9 @@ import {
   View,
   Text,
   ScrollView,
+  Button,
 } from 'react-native';
+import realm from "./src/db";
 import TodoInsert from './src/components/TodoInsert';
 import TodoList from './src/components/TodoList';
 
@@ -16,10 +18,15 @@ const App = () => {
   const [todos, setTodos] = useState([]);
 
   const addTodo = text => {
-    setTodos([
-      ...todos,
-      {id: Math.random().toString(), textValue: text, checked: false},
-    ]);
+    realm.write(() => {
+      realm.create("TodoData", {
+        id: Math.random().toString(),
+        createTime: new Date().toString(),
+        categoryType: 1,
+        content:text,
+        checked: false
+      });
+    });
   };
 
   const onRemove = id => e => {

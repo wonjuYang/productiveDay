@@ -3,7 +3,7 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
+const TodoListItem = ({content, id, checked, onRemove, onToggle}) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPressOut={onToggle(id)}>
@@ -20,7 +20,7 @@ const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
           styles.text,
           checked ? styles.strikeText : styles.unstrikeText,
         ]}>
-        {textValue}
+        {content}
       </Text>
       <TouchableOpacity style={styles.buttonContainer}>
           <Text style={styles.buttonText} onPress={onRemove(id)}>

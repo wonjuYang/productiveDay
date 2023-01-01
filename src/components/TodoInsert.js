@@ -11,7 +11,7 @@ const TodoInsert = ({onAddTodo}) => {
       if(newTodoItem != ''){
           onAddTodo(newTodoItem);
       }else{
-          Alert.alert('어머!!', '할일을 입력하셔야죠', [
+          Alert.alert('어머!!', '할일을 입력하셔야죠!', [
               {text: 'Understood', onPress: () => console.log('alert closed')},
               {text: 'Sorry', onPress: () => console.log('alert closed')},
               {text: 'False', onPress: () => console.log('alert closed')},

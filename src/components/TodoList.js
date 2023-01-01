@@ -1,14 +1,21 @@
 // components/TodoList.js
 import React from 'react';
-import {StyleSheet, ScrollView, Text} from 'react-native';
+import {StyleSheet, ScrollView, Text, SectionList} from 'react-native';
 import TodoListItem from './TodoListItem';
+import realm from ".././db";
 
-const TodoList = ({todos, onRemove, onToggle}) => {
+
+const TodoList = ({onRemove, onToggle}) => {
+  const tasks = realm.objects("TodoData");
   return (
     <ScrollView contentContainerStyle={styles.listContainer}>
-        {todos.map(todo => (
-          <TodoListItem key={todo.id} {...todo} onRemove={onRemove} onToggle={onToggle} />
-        ))}
+     {tasks.map(item => (
+        <TodoListItem key={item.id}
+                      content={item.content}
+                     checked={item.checked}
+                     onToggle={() => onToggle(item)}
+                     onRemove={() => onRemove(item)} />
+     ))}
     </ScrollView>
   );
 };
