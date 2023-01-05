@@ -20,7 +20,7 @@ const App = () => {
   const addTodo = text => {
     realm.write(() => {
       realm.create("TodoData", {
-        id: Math.random().toString(),
+        id: "hi",
         createTime: new Date().toString(),
         categoryType: 1,
         content:text,
@@ -34,11 +34,22 @@ const App = () => {
   }
 
   const onToggle = id => e => {
-    setTodos(
-        todos.map(todo =>
-            todo.id === id ? {...todo, checked: !todo.checked} : todo,
-        ),
-    );
+    console.log("toggle")
+    console.log(typeof(id.id))
+
+const todo = realm.objects("TodoData").filtered('id CONTAINS "hi"');
+    realm.write(() => {
+
+        todo[0].checked = true
+        console.log(todo[0].checked)
+        console.log(realm.objects("TodoData"))
+    })
+    console.log(realm.objects("TodoData"))
+//    setTodos(
+//        todos.map(todo =>
+//            todo.id === id ? {...todo, checked: !todo.checked} : todo,
+//        ),
+//    );
   }
 
   return (
