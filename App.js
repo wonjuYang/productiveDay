@@ -20,7 +20,7 @@ const App = () => {
   const addTodo = text => {
     realm.write(() => {
       realm.create("TodoData", {
-        id: "hi",
+        id: Math.random().toString(),
         createTime: new Date().toString(),
         categoryType: 1,
         content:text,
@@ -30,21 +30,21 @@ const App = () => {
   };
 
   const onRemove = id => e => {
-    setTodos(todos.filter(todo => todo.id !== id));
+        realm.write(() => {
+            realm.delete(id);
+            id =null;
+        })
+        console.log(realm.path)
+        // 여기서 이제 상태값을 업데이트 해준다
   }
 
   const onToggle = id => e => {
-    console.log("toggle")
-    console.log(typeof(id.id))
 
-const todo = realm.objects("TodoData").filtered('id CONTAINS "hi"');
+    const todo = id
     realm.write(() => {
-
-        todo[0].checked = true
-        console.log(todo[0].checked)
-        console.log(realm.objects("TodoData"))
+        id.checked = id.checked ? false: true
     })
-    console.log(realm.objects("TodoData"))
+    //여기에 redux가 업데이트 되는 것을 설정하면 된다
 //    setTodos(
 //        todos.map(todo =>
 //            todo.id === id ? {...todo, checked: !todo.checked} : todo,
