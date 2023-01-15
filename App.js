@@ -15,7 +15,8 @@ import TodoList from './src/components/TodoList';
 const App = () => {
   // todos: {id: Number, textValue: string, checked: boolean, createdDate : string, type : string,
   //          limitDate : string, isAlert : boolean}
-  const [todos, setTodos] = useState([]);
+  const [tasks, setTodos] = useState(() => getTasks);
+  const getTasks = realm.objects("TodoData");
 
   const addTodo = text => {
     realm.write(() => {
@@ -27,6 +28,7 @@ const App = () => {
         checked: false
       });
     });
+    setTodos(getTasks)
   };
 
   const onRemove = id => e => {
@@ -36,28 +38,25 @@ const App = () => {
         })
         console.log(realm.path)
         // 여기서 이제 상태값을 업데이트 해준다
+        setTodos(getTasks)
   }
 
   const onToggle = id => e => {
-
     const todo = id
     realm.write(() => {
         id.checked = id.checked ? false: true
     })
-    //여기에 redux가 업데이트 되는 것을 설정하면 된다
-//    setTodos(
-//        todos.map(todo =>
-//            todo.id === id ? {...todo, checked: !todo.checked} : todo,
-//        ),
-//    );
+    setTodos(getTasks)
   }
+
+
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.appTitle}>Hello Todolist</Text>
       <View style={styles.card}>
         <TodoInsert onAddTodo={addTodo} />
-        <TodoList todos={todos} onRemove={onRemove} onToggle={onToggle} />
+        <TodoList tasks={getTasks} onRemove={onRemove} onToggle={onToggle} />
       </View>
     </SafeAreaView>
   );

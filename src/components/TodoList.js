@@ -5,8 +5,8 @@ import TodoListItem from './TodoListItem';
 import realm from ".././db";
 
 
-const TodoList = ({onRemove, onToggle}) => {
-  const tasks = realm.objects("TodoData");
+const TodoList = ({onRemove, onToggle, tasks}) => {
+
   return (
     <ScrollView contentContainerStyle={styles.listContainer}>
      {tasks.map(item => (
